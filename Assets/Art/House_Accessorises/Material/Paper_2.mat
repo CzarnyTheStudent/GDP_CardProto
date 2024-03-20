@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Book_3
+  m_Name: Paper_2
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
   - _METALLICGLOSSMAP
@@ -23,7 +23,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 77c567cb1c657f344a7729329d453386, type: 3}
+        m_Texture: {fileID: 2800000, guid: dd569d486c83b9e40a5dbc597265f1e1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -43,11 +43,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 4de3d3a7613c7114ab49161e3e131a97, type: 3}
+        m_Texture: {fileID: 2800000, guid: 090c6617b9c3f154fbf84912229055f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 59e5f06b588da3c45b8dcb5ed2880503, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7b2dc0566e4744649a4a6541b2550f0a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
