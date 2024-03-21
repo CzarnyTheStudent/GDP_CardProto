@@ -12,7 +12,7 @@ public class Card : MonoBehaviour
     public Image Icon4; 
     public bool canMove;
     public GameObject indicator;
-    private GameObject indicatorInstance;
+    [HideInInspector] public GameObject indicatorInstance;
     private bool isDragging = false;
 
     private void Start()
@@ -66,7 +66,7 @@ public class Card : MonoBehaviour
         }
     }
     
-    void DestroyIndicator()
+    public void DestroyIndicator()
     {
         if (indicatorInstance != null)
         {
@@ -103,11 +103,9 @@ public class Card : MonoBehaviour
         
         if (Physics.Raycast(transform.position, rayDirection, out hit))
         {
-            if (hit.collider.gameObject)
+            if (hit.collider.gameObject && canMove)
             {
                 GameLogic.Instance.PlaceCardOnCell(gameObject, indicatorInstance);
-                DestroyIndicator();
-                canMove = false;
             }
             else
             {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -16,6 +17,8 @@ public class GameLogic : MonoBehaviour
     private bool getStop = true;
     private bool _enemyTurn;
     private Vector3 _cardStartPos;
+    public float countdownDuration = 4f; // Czas odliczania w sekundach
+    private float countdownTimer; 
 
     public static GameLogic Instance { get; private set; }
 
@@ -29,15 +32,34 @@ public class GameLogic : MonoBehaviour
         cardCreator.CreatePlayerCards(cardCreator.gameCards.Length, cardCreator.gameCards); // Dla gracza 1
         InitializeGame();
         _enemyTurn = false;
+        StartCountdown();
+    }
+
+    void StartCountdown()
+    {
+        countdownTimer = countdownDuration;
+        InvokeRepeating("UpdateCountdown", 0f, 1f); // Wywołanie funkcji co 1 sekundę
+    }
+
+    void UpdateCountdown()
+    {
+        countdownTimer -= 1f;
+
+        if (countdownTimer <= 0f)
+        {
+            CancelInvoke("UpdateCountdown");
+            Debug.Log("Koniec odliczania. Gra rozpoczęta!");
+        }
     }
     
     void Update()
     {
         HandleInput();
 
-        if (Input.GetKey(KeyCode.D) && getStop)
+        if (countdownTimer == 0 && getStop)
         {
             GameObject playerCard = addedCards[Random.Range(0, addedCards.Count)];
+            addedCards.Remove(playerCard);
             playerCard.transform.position += new Vector3(1.5f, 0, 0);
             playerCard.GetComponent<Renderer>().material = playerMat;
             playerCard.GetComponent<Card>().canMove = true;
@@ -88,12 +110,52 @@ public class GameLogic : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        GameObject playerCard = addedCards[Random.Range(0, addedCards.Count)];
-        playerCard.transform.position += new Vector3(1.5f, 0, 0);
-        playerCard.GetComponent<Renderer>().material = botMat;
+        Vector2Int randomCell = GetRandomEmptyCellPosition();
+        GameObject botCard = addedCards[Random.Range(0, addedCards.Count)];
+        Card cardBotData = botCard.GetComponent<Card>();
+        addedCards.Remove(botCard);
+        //botCard.transform.position = new Vector3(randomCell.x, 0, randomCell.y);
+        botCard.GetComponent<Renderer>().material = botMat;
+        yield return new WaitForSeconds(2f);
+        cardBotData.indicatorInstance.SetActive(true);
+        cardBotData.indicatorInstance.transform.position = new Vector3(randomCell.x, 0, randomCell.y);
+        yield return new WaitForSeconds(1f);
+        GameLogic.Instance.PlaceCardOnCell(botCard, botCard.GetComponent<Card>().indicatorInstance);
+        cardBotData.DestroyIndicator();
+        getStop = true;
         yield return null;
+        _enemyTurn = false;
+        StopCoroutine(EnemyTurn());
     }
-    
+
+    Vector2Int GetRandomEmptyCellPosition()
+    {
+        List<Vector2Int> emptyCells = new List<Vector2Int>();
+
+        for (int row = 0; row < 5; row++)
+        {
+            for (int col = 0; col < 5; col++)
+            {
+                if (!isCellOccupied[row, col])
+                {
+                    emptyCells.Add(new Vector2Int(row, col));
+                }
+            }
+        }
+
+        if (emptyCells.Count > 0)
+        {
+            int randomIndex = Random.Range(0, emptyCells.Count);
+            return emptyCells[randomIndex];
+        }
+        else
+        {
+            // No empty cells found, return (-1, -1) as an indication of failure
+            return new Vector2Int(-1, -1);
+        }
+    }
+
+
     public void PlaceCardOnCell(GameObject card, GameObject cell)
     {
         int row = Mathf.RoundToInt(cell.transform.position.x);
@@ -105,18 +167,17 @@ public class GameLogic : MonoBehaviour
             card.transform.position = cell.transform.position + new Vector3(0f, 0.5f, 0f);
             isCellOccupied[row, col] = true;
             _enemyTurn = true;
-            if (_enemyTurn)
+            if (_enemyTurn && card.GetComponent<Card>().canMove)
             {
                 StartCoroutine(EnemyTurn());
-                _enemyTurn = false;
+                card.GetComponent<Card>().DestroyIndicator();
+                card.GetComponent<Card>().canMove = false;
             }
         }
         else
         {
-            // Jeśli komórka jest już zajęta, wróć do poprzedniej pozycji karty
             Debug.Log("Nie udało się umieścić");
             card.transform.position = _cardStartPos;
-            //cardScript.ReturnToStartPosition();
         }
     }
     
