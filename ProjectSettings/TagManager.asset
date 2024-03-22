@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Card
   - BoardCell
+  - Icon
   layers:
   - Default
   - TransparentFX

@@ -28,7 +28,7 @@ public class CardCreator : ScriptableObject
     {
         for (int i = 0; i < cardCount; i++)
         {
-            GameObject card = Instantiate(cardData[i].cardPrefab, cardData[i].cardPrefab.transform.position + new Vector3(-2.7f, 2, 2f), Quaternion.Euler(180 , 0, 0));
+            GameObject card = Instantiate(cardData[i].cardPrefab, cardData[i].cardPrefab.transform.position + new Vector3(-10f, 2, 2f), Quaternion.Euler(180 , 0, 0));
             cardsObject.Add(card);
             
             // Dodaj komponenty, które będą zarządzały kartą (np. skrypt do zmiany obrazków)
@@ -63,8 +63,8 @@ public class ImagesData
 
 public enum Icone
 {
-    Emotion,
-    Irony,
-    Logic,
-    Manipulation
+    Emotion = 0,
+    Irony = 1,
+    Logic = 2,
+    Manipulation = 3
 }

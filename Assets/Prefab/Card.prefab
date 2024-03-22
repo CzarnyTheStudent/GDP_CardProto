@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d584269a9238ebf458f3cc6ad9163e44, type: 2}
+  - {fileID: 2100000, guid: 2f1c72d3068515b4eb5121983f0feffc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -116,7 +116,9 @@ MonoBehaviour:
   Icon3: {fileID: 3483004921267370693}
   Icon4: {fileID: 3483004922669625218}
   canMove: 0
+  gameLogic: {fileID: 0}
   indicator: {fileID: 0}
+  indicatorInstance: {fileID: 0}
 --- !u!1 &3483004921267370695
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,9 +131,10 @@ GameObject:
   - component: {fileID: 3483004921267370692}
   - component: {fileID: 3483004921267370693}
   - component: {fileID: 3271491303210926723}
+  - component: {fileID: 7848489372330090348}
   m_Layer: 0
   m_Name: Icon3
-  m_TagString: Untagged
+  m_TagString: Icon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,11 +205,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483004921267370695}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2.5246725, z: 0.09549067}
   m_Center: {x: 0, y: 0.7623371, z: -0.0029453384}
+--- !u!54 &7848489372330090348
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3483004921267370695}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3483004921346705242
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,9 +342,10 @@ GameObject:
   - component: {fileID: 3483004922451606621}
   - component: {fileID: 3483004922451606622}
   - component: {fileID: 7515025465700217300}
+  - component: {fileID: 7515557336087948839}
   m_Layer: 0
   m_Name: Icon1
-  m_TagString: Untagged
+  m_TagString: Icon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -396,11 +416,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483004922451606608}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2.5246725, z: 0.09549067}
   m_Center: {x: 0, y: 0.7623371, z: -0.0029453384}
+--- !u!54 &7515557336087948839
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3483004922451606608}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3483004922574679792
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,9 +449,10 @@ GameObject:
   - component: {fileID: 3483004922574679805}
   - component: {fileID: 3483004922574679806}
   - component: {fileID: 5110680852112634191}
+  - component: {fileID: 1082057541587289102}
   m_Layer: 0
   m_Name: Icon2
-  m_TagString: Untagged
+  m_TagString: Icon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -486,11 +523,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483004922574679792}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2.5246725, z: 0.09549067}
   m_Center: {x: 0, y: 0.7623371, z: -0.0029453384}
+--- !u!54 &1082057541587289102
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3483004922574679792}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3483004922669625220
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,9 +556,10 @@ GameObject:
   - component: {fileID: 3483004922669625217}
   - component: {fileID: 3483004922669625218}
   - component: {fileID: 3661503785249282903}
+  - component: {fileID: 7777657892404364386}
   m_Layer: 0
   m_Name: Icon4
-  m_TagString: Untagged
+  m_TagString: Icon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -576,8 +630,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3483004922669625220}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2.5246725, z: 0.09549067}
   m_Center: {x: 0, y: 0.7623371, z: -0.0029453384}
+--- !u!54 &7777657892404364386
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3483004922669625220}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

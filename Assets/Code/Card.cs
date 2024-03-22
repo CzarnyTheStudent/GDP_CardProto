@@ -11,6 +11,9 @@ public class Card : MonoBehaviour
     public Image Icon3;
     public Image Icon4; 
     public bool canMove;
+    public bool isSet;
+    public bool botCardThis;
+    public GameLogic gameLogic;
     public GameObject indicator;
     [HideInInspector] public GameObject indicatorInstance;
     private bool isDragging = false;
@@ -36,6 +39,17 @@ public class Card : MonoBehaviour
         if (isDragging)
         {
             UpdatePosition();
+            
+            bool Rpressed = false;
+            if (Input.GetKeyDown(KeyCode.R) && !Rpressed)
+            {
+                transform.Rotate(0, 90 , 0);
+                Rpressed = true;
+            } 
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                Rpressed = false;
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && canMove)
@@ -113,5 +127,7 @@ public class Card : MonoBehaviour
             }
         }
     }
+    
+   
 
 }

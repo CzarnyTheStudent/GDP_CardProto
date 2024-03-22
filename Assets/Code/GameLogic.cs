@@ -1,21 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GameLogic : MonoBehaviour
 {
     public CardCreator cardCreator;
     public GameObject indicator;
-    [FormerlySerializedAs("player")] public Material playerMat;
-    [FormerlySerializedAs("bot")] public Material botMat;
+    public Material playerMat;
+    public Material botMat;
     [HideInInspector]public List<GameObject> addedCards;
     public GameObject[,] board = new GameObject[5,5];
+    public bool _enemyTurn;
     private bool[,] isCellOccupied;
     private bool getStop = true;
-    private bool _enemyTurn;
     private Vector3 _cardStartPos;
     public float countdownDuration = 4f; // Czas odliczania w sekundach
     private float countdownTimer; 
@@ -60,9 +62,10 @@ public class GameLogic : MonoBehaviour
         {
             GameObject playerCard = addedCards[Random.Range(0, addedCards.Count)];
             addedCards.Remove(playerCard);
-            playerCard.transform.position += new Vector3(1.5f, 0, 0);
+            playerCard.transform.position += new Vector3(8f, 0, 0);
             playerCard.GetComponent<Renderer>().material = playerMat;
             playerCard.GetComponent<Card>().canMove = true;
+            playerCard.GetComponent<Card>().botCardThis = false;
             _cardStartPos = playerCard.transform.position;
             getStop = false;
         }
@@ -86,9 +89,18 @@ public class GameLogic : MonoBehaviour
 
             cardScript.indicator = indicator;
             cardScript.Icon1.sprite = cardCreator.gameCards[i].imagesData[0].cardImages;
+            var addDataIc1 = cardScript.Icon1.AddComponent<Icon>();
+            addDataIc1.iconType = cardCreator.gameCards[i].imagesData[0].icone;
             cardScript.Icon2.sprite = cardCreator.gameCards[i].imagesData[1].cardImages;
+            var addDataIc2 = cardScript.Icon2.AddComponent<Icon>();
+            addDataIc2.iconType = cardCreator.gameCards[i].imagesData[1].icone;
             cardScript.Icon3.sprite = cardCreator.gameCards[i].imagesData[2].cardImages;
+            var addDataIc3 = cardScript.Icon3.AddComponent<Icon>();
+            addDataIc3.iconType = cardCreator.gameCards[i].imagesData[2].icone;
             cardScript.Icon4.sprite = cardCreator.gameCards[i].imagesData[3].cardImages;
+            var addDataIc4 = cardScript.Icon4.AddComponent<Icon>();
+            addDataIc4.iconType = cardCreator.gameCards[i].imagesData[3].icone;
+            cardScript.gameLogic = this;
         }
     }
     
@@ -119,12 +131,14 @@ public class GameLogic : MonoBehaviour
         yield return new WaitForSeconds(2f);
         cardBotData.indicatorInstance.SetActive(true);
         cardBotData.indicatorInstance.transform.position = new Vector3(randomCell.x, 0, randomCell.y);
+        cardBotData.botCardThis = true;
         yield return new WaitForSeconds(1f);
         GameLogic.Instance.PlaceCardOnCell(botCard, botCard.GetComponent<Card>().indicatorInstance);
+        cardBotData.isSet = true;
         cardBotData.DestroyIndicator();
         getStop = true;
-        yield return null;
         _enemyTurn = false;
+        yield return null;
         StopCoroutine(EnemyTurn());
     }
 
@@ -166,12 +180,17 @@ public class GameLogic : MonoBehaviour
             // Umieść kartę na planszy i oznacz komórkę jako zajętą
             card.transform.position = cell.transform.position + new Vector3(0f, 0.5f, 0f);
             isCellOccupied[row, col] = true;
-            _enemyTurn = true;
+            //card.GetComponent<Card>().canMove = true;
+            if (!card.GetComponent<Card>().botCardThis)
+            { 
+                _enemyTurn = true;
+            }
             if (_enemyTurn && card.GetComponent<Card>().canMove)
             {
                 StartCoroutine(EnemyTurn());
                 card.GetComponent<Card>().DestroyIndicator();
                 card.GetComponent<Card>().canMove = false;
+                card.GetComponent<Card>().isSet = true;
             }
         }
         else
@@ -201,6 +220,5 @@ public class GameLogic : MonoBehaviour
         }
         
     }
-
    
 }
